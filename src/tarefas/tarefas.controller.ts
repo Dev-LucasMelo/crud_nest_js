@@ -1,7 +1,8 @@
-import { Body, Controller, Get,Post } from '@nestjs/common';
+import { Body, Controller, Get, Post, Patch } from '@nestjs/common';
 import { tarefa } from '@prisma/client';
 import { TarefasService } from './tarefas.service';
 import { createTarefasDto } from './dto/createTarefas.dto';
+import { updateTarefasDto } from './dto/updateTarefas.dto';
 
 @Controller('tarefas')
 export class TarefasController {
@@ -9,12 +10,17 @@ export class TarefasController {
 
     @Get('/')
     async findAll(): Promise<tarefa[]> {
-        return this.service.findAll()
+        return await this.service.findAll()
     }
 
     @Post('/create')
-    async create(@Body() dados: createTarefasDto ) {
-        return this.service.create(dados)
+    async create(@Body() dados: createTarefasDto) {
+        return await this.service.create(dados)
+    }
+
+    @Patch('/update')
+    async update(@Body() dados: updateTarefasDto) {
+        return await this.service.update(dados)
     }
 
 }

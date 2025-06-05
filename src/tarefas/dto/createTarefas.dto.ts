@@ -1,4 +1,4 @@
-import { IsString, IsDefined, isNotEmpty, IsNotEmpty, IsOptional } from "class-validator";
+import { IsString, IsDefined, IsNotEmpty, IsOptional } from "class-validator";
 export class createTarefasDto {
 
     @IsDefined({message: "O Campo nome é obrigatório"})
