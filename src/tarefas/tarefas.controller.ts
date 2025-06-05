@@ -13,10 +13,8 @@ export class TarefasController {
     }
 
     @Post('/create')
-    async create(@Body() createDto: createTarefasDto ) {
-        console.log(createDto)
-
-        return createDto
+    async create(@Body() dados: createTarefasDto ) {
+        return this.service.create(dados)
     }
 
 }

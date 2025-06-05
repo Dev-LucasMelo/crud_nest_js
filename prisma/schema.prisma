@@ -11,5 +11,5 @@ model tarefa {
   id Int @id @default(autoincrement())
   nome String 
   descricao String
-  realizada Boolean
+  realizada Boolean @default(false)
 }
