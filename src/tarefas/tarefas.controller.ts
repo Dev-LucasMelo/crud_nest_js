@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post, Patch, Delete } from '@nestjs/common';
+import { Body, Controller, Get, Post, Patch, Delete, Param, NotFoundException } from '@nestjs/common';
 import { tarefa } from '@prisma/client';
 import { TarefasService } from './tarefas.service';
 import { createTarefasDto } from './dto/createTarefas.dto';
@@ -13,6 +13,11 @@ export class TarefasController {
     @Get('/')
     async findAll(): Promise<tarefa[]> {
         return await this.service.findAll()
+    }
+
+    @Get(':id')
+    async findUnique(@Param('id') id: number): Promise<tarefa | NotFoundException> {
+        return await this.service.findUnique(id)
     }
 
     @Post('/create')
