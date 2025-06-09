@@ -12,4 +12,14 @@ model tarefa {
   nome String 
   descricao String
   realizada Boolean @default(false)
+  user_id Int
+
+  user user @relation(fields: [user_id], references: [id])
+}
+
+model user {
+  id Int @id 
+  name String @unique
+  password String
+  tarefas tarefa[]
 }

@@ -1,9 +1,9 @@
 import { Body, Controller, Get, Post, Patch, Delete, Param, NotFoundException } from '@nestjs/common';
 import { tarefa } from '@prisma/client';
 import { TarefasService } from './tarefas.service';
-import { createTarefasDto } from './dto/createTarefas.dto';
-import { updateTarefasDto } from './dto/updateTarefas.dto';
-import { deleteTarefasDto } from './dto/deleteTarefas.dto';
+import { createTarefasDto } from './validations/createTarefas.dto';
+import { updateTarefasDto } from './validations/updateTarefas.dto';
+import { deleteTarefasDto } from './validations/deleteTarefas.dto';
 
 
 @Controller('tarefas')

@@ -10,6 +10,10 @@ export class createTarefasDto {
     @IsDefined({message: "O Campo descricao é obrigatório"})
     descricao: string;
 
+    @IsDefined({message: "O campo user_id é obrigatório"})
+    @IsNotEmpty({message: "O campo user_id não pode ser vazio"})
+    user_id: number
+
     @IsOptional()
     realizada: boolean;
 

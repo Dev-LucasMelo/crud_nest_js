@@ -1,9 +1,9 @@
 import { Injectable, BadRequestException, NotFoundException } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { tarefa } from '@prisma/client';
-import { createTarefasDto } from './dto/createTarefas.dto';
-import { updateTarefasDto } from './dto/updateTarefas.dto';
-import { deleteTarefasDto } from './dto/deleteTarefas.dto';
+import { createTarefasDto } from './validations/createTarefas.dto';
+import { updateTarefasDto } from './validations/updateTarefas.dto';
+import { deleteTarefasDto } from './validations/deleteTarefas.dto';
 
 @Injectable()
 export class TarefasService {
@@ -13,14 +13,14 @@ export class TarefasService {
         return await this.prisma.tarefa.findMany()
     }
 
-    async findUnique(id: number): Promise<tarefa | NotFoundException > {
+    async findUnique(id: number): Promise<tarefa | NotFoundException> {
         return await this.prisma.tarefa.findUniqueOrThrow({
             where: {
                 id: id
             }
-        }).then((response) =>{
+        }).then((response) => {
             return response
-        }).catch((err) =>{
+        }).catch((err) => {
             throw new NotFoundException("Tarefa não existente")
         })
     }
