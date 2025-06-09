@@ -3,6 +3,7 @@ import { PrismaService } from 'src/prisma/prisma.service';
 import { tarefa } from '@prisma/client';
 import { createTarefasDto } from './dto/createTarefas.dto';
 import { updateTarefasDto } from './dto/updateTarefas.dto';
+import { deleteTarefasDto } from './dto/deleteTarefas.dto';
 
 @Injectable()
 export class TarefasService {
@@ -17,7 +18,6 @@ export class TarefasService {
     }
 
     async update(dados: updateTarefasDto): Promise<tarefa | any> {
-
         return await this.prisma.tarefa.update({
             where: {
                 id: dados.id,
@@ -28,6 +28,20 @@ export class TarefasService {
         }).catch((err) => {
             throw new NotFoundException("Tarefa não existente")
         })
-
     }
+
+    async delete(dados: deleteTarefasDto): Promise<any | NotFoundException> {
+        return await this.prisma.tarefa.delete({
+            where: {
+                id: dados.id
+            }
+        }).then((response) => {
+            return {
+                message: "Tarefa excluida com sucesso"
+            }
+        }).catch((err) => {
+            throw new NotFoundException("Tarefa não existente")
+        })
+    }
+
 }

@@ -1,8 +1,10 @@
-import { Body, Controller, Get, Post, Patch } from '@nestjs/common';
+import { Body, Controller, Get, Post, Patch, Delete } from '@nestjs/common';
 import { tarefa } from '@prisma/client';
 import { TarefasService } from './tarefas.service';
 import { createTarefasDto } from './dto/createTarefas.dto';
 import { updateTarefasDto } from './dto/updateTarefas.dto';
+import { deleteTarefasDto } from './dto/deleteTarefas.dto';
+
 
 @Controller('tarefas')
 export class TarefasController {
@@ -21,6 +23,11 @@ export class TarefasController {
     @Patch('/update')
     async update(@Body() dados: updateTarefasDto) {
         return await this.service.update(dados)
+    }
+
+    @Delete('/delete')
+    async delete(@Body() dados: deleteTarefasDto) {
+        return await this.service.delete(dados)
     }
 
 }
