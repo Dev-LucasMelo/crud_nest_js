@@ -18,7 +18,7 @@ model tarefa {
 }
 
 model user {
-  id Int @id 
+  id Int @id @default(autoincrement())
   name String @unique
   password String
   tarefas tarefa[]
