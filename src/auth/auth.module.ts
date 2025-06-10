@@ -1,9 +1,13 @@
 import { Module } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { AuthController } from './auth.controller';
-
+import { PrismaModule } from 'src/prisma/prisma.module';
+import { UserService } from 'src/user/user.service';
+import { JwtModule } from '@nestjs/jwt';
+import { JwtStrategy } from './local.strategy';
 @Module({
+  imports: [PrismaModule, JwtModule.register({ secret: '244466666', signOptions: { expiresIn: '1m' } })],
   controllers: [AuthController],
-  providers: [AuthService],
+  providers: [AuthService, UserService, JwtStrategy],
 })
-export class AuthModule {}
+export class AuthModule { }

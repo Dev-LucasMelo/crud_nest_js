@@ -1,17 +1,21 @@
-import { Body, Controller, Get, Post, Patch, Delete, Param, NotFoundException } from '@nestjs/common';
+import { Body, Controller, Get, Post, Patch, Delete, Param, NotFoundException, UseGuards } from '@nestjs/common';
 import { tarefa } from '@prisma/client';
 import { TarefasService } from './tarefas.service';
 import { createTarefasDto } from './validations/createTarefas.dto';
 import { updateTarefasDto } from './validations/updateTarefas.dto';
 import { deleteTarefasDto } from './validations/deleteTarefas.dto';
+import { JWTguard } from '../auth/jwt.guard';
+import { usuarioLogado } from 'src/auth/decorators/usuarioLogado.Decorator';
 
 
 @Controller('tarefas')
+@UseGuards(JWTguard)
 export class TarefasController {
     constructor(private service: TarefasService) { }
 
     @Get('/')
-    async findAll(): Promise<tarefa[]> {
+    async findAll(@usuarioLogado() user: any): Promise<tarefa[]> {
+        console.log(user)
         return await this.service.findAll()
     }
 

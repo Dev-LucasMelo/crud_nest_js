@@ -7,6 +7,14 @@ import { hash } from "bcrypt"
 export class UserService {
     constructor(private prisma: PrismaService) { }
 
+    async findUnique(name: string) {
+        return await this.prisma.user.findUnique({
+            where: {
+                name: name
+            }
+        })
+    }
+
     async create(dados: CadastroUserDto) {
 
         let user = await this.prisma.user.findUnique({
