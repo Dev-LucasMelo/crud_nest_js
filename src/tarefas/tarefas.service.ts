@@ -1,5 +1,5 @@
 import { Injectable, BadRequestException, NotFoundException } from '@nestjs/common';
-import { PrismaService } from 'src/prisma/prisma.service';
+import { PrismaService } from '../prisma/prisma.service'
 import { tarefa } from '@prisma/client';
 import { createTarefasDto } from './validations/createTarefas.dto';
 import { updateTarefasDto } from './validations/updateTarefas.dto';
