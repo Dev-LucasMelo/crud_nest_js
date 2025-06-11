@@ -1,5 +1,5 @@
 import { Body, Controller, Get, Post, Patch, Delete, Param, NotFoundException, UseGuards } from '@nestjs/common';
-import { tarefa } from '@prisma/client';
+import { tarefa,user } from '@prisma/client';
 import { TarefasService } from './tarefas.service';
 import { createTarefasDto } from './validations/createTarefas.dto';
 import { updateTarefasDto } from './validations/updateTarefas.dto';
@@ -14,7 +14,7 @@ export class TarefasController {
     constructor(private service: TarefasService) { }
 
     @Get('/')
-    async findAll(@usuarioLogado() user: any): Promise<tarefa[]> {
+    async findAll(@usuarioLogado() user: user): Promise<tarefa[]> {
         console.log(user)
         return await this.service.findAll()
     }
@@ -25,8 +25,8 @@ export class TarefasController {
     }
 
     @Post('/create')
-    async create(@Body() dados: createTarefasDto) {
-        return await this.service.create(dados)
+    async create(@Body() dados: createTarefasDto, @usuarioLogado() user: user) {
+        return await this.service.create(dados,user)
     }
 
     @Patch('/update')

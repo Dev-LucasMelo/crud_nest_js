@@ -1,6 +1,6 @@
 import { Injectable, BadRequestException, NotFoundException } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service'
-import { tarefa } from '@prisma/client';
+import { tarefa, user } from '@prisma/client';
 import { createTarefasDto } from './validations/createTarefas.dto';
 import { updateTarefasDto } from './validations/updateTarefas.dto';
 import { deleteTarefasDto } from './validations/deleteTarefas.dto';
@@ -25,8 +25,15 @@ export class TarefasService {
         })
     }
 
-    async create(dados: createTarefasDto): Promise<tarefa> {
-        return await this.prisma.tarefa.create({ data: dados })
+    async create(dados: createTarefasDto, user: user): Promise<tarefa> {
+
+        let insert: Omit<tarefa, 'id' |'realizada' > = {
+            nome: dados.nome,
+            descricao: dados.descricao,
+            user_id: user.id
+        }
+
+        return await this.prisma.tarefa.create({ data: insert })
     }
 
     async update(dados: updateTarefasDto): Promise<tarefa | NotFoundException> {
