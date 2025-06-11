@@ -5,7 +5,7 @@ import { createTarefasDto } from './validations/createTarefas.dto';
 import { updateTarefasDto } from './validations/updateTarefas.dto';
 import { deleteTarefasDto } from './validations/deleteTarefas.dto';
 import { JWTguard } from '../auth/jwt.guard';
-import { usuarioLogado } from 'src/auth/decorators/usuarioLogado.Decorator';
+import { usuarioLogado } from '../auth/decorators/usuarioLogado.Decorator';
 
 
 @Controller('tarefas')
