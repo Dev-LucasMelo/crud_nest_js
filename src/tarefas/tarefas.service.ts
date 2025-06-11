@@ -17,10 +17,12 @@ export class TarefasService {
         })
     }
 
-    async findUnique(id: number): Promise<tarefa | NotFoundException> {
+    async findUnique(id: number, user: user): Promise<tarefa | NotFoundException> {
+
         return await this.prisma.tarefa.findUniqueOrThrow({
             where: {
-                id: id
+                id: id,
+                user_id: user.id
             }
         }).then((response) => {
             return response
@@ -31,7 +33,7 @@ export class TarefasService {
 
     async create(dados: createTarefasDto, user: user): Promise<tarefa> {
 
-        let insert: Omit<tarefa, 'id' |'realizada' > = {
+        let insert: Omit<tarefa, 'id' | 'realizada'> = {
             nome: dados.nome,
             descricao: dados.descricao,
             user_id: user.id
@@ -40,7 +42,19 @@ export class TarefasService {
         return await this.prisma.tarefa.create({ data: insert })
     }
 
-    async update(dados: updateTarefasDto): Promise<tarefa | NotFoundException> {
+    async update(dados: updateTarefasDto, user: user): Promise<tarefa | NotFoundException> {
+
+        let tarefaAlvo = await this.prisma.tarefa.findUnique({
+            where: {
+                id: dados.id,
+                user_id: user.id,
+            }
+        })
+
+        if (!tarefaAlvo) {
+            throw new NotFoundException("Tarefa não existente")
+        }
+
         return await this.prisma.tarefa.update({
             where: {
                 id: dados.id,
@@ -53,10 +67,12 @@ export class TarefasService {
         })
     }
 
-    async delete(dados: deleteTarefasDto): Promise<any | NotFoundException> {
+    async delete(dados: deleteTarefasDto, user: user): Promise<any | NotFoundException> {
+        
         return await this.prisma.tarefa.delete({
             where: {
-                id: dados.id
+                id: dados.id,
+                user_id: user.id
             }
         }).then((response) => {
             return {

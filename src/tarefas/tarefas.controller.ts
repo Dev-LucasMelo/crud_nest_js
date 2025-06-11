@@ -19,8 +19,8 @@ export class TarefasController {
     }
 
     @Get(':id')
-    async findUnique(@Param('id') id: number): Promise<tarefa | NotFoundException> {
-        return await this.service.findUnique(id)
+    async findUnique(@Param('id') id: number, @usuarioLogado() user: user): Promise<tarefa | NotFoundException> {
+        return await this.service.findUnique(id, user)
     }
 
     @Post('/create')
@@ -29,13 +29,13 @@ export class TarefasController {
     }
 
     @Patch('/update')
-    async update(@Body() dados: updateTarefasDto) {
-        return await this.service.update(dados)
+    async update(@Body() dados: updateTarefasDto, @usuarioLogado() user: user) {
+        return await this.service.update(dados, user)
     }
 
     @Delete('/delete')
-    async delete(@Body() dados: deleteTarefasDto) {
-        return await this.service.delete(dados)
+    async delete(@Body() dados: deleteTarefasDto, @usuarioLogado() user: user) {
+        return await this.service.delete(dados,user )
     }
 
 }
