@@ -9,8 +9,12 @@ import { deleteTarefasDto } from './validations/deleteTarefas.dto';
 export class TarefasService {
     constructor(private prisma: PrismaService) { }
 
-    async findAll(): Promise<tarefa[]> {
-        return await this.prisma.tarefa.findMany()
+    async findAll(user: user): Promise<tarefa[]> {
+        return await this.prisma.tarefa.findMany({
+            where: {
+                user_id: user.id
+            }
+        })
     }
 
     async findUnique(id: number): Promise<tarefa | NotFoundException> {

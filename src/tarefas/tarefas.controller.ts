@@ -15,8 +15,7 @@ export class TarefasController {
 
     @Get('/')
     async findAll(@usuarioLogado() user: user): Promise<tarefa[]> {
-        console.log(user)
-        return await this.service.findAll()
+        return await this.service.findAll(user)
     }
 
     @Get(':id')
